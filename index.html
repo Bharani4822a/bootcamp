@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Gesture Control Car Using OpenCV</title>
+</head>
+
+<body>
+    <h1>Gesture control car using openCV</h1>
+    <div class="gestue">
+        <div class="container" id="container">
+
+        </div>
+    </div>
+
+
+    <script>
+        var data = [
+            {
+                "title": "Camera",
+                "description": "This is using to recognize the hand",
+                "image": "camera.png"
+            },
+            {
+                "title": "Hand",
+                "description": "This is user input",
+                "image": "hand.png"
+            },
+            {
+                "title": "Wireguard",
+                "description": "Secure VPN Network to transfer data to server to client",
+                "image": "wireguard.png"
+            },
+            {
+                "title": "Rabbitmq",
+                "description": "This help us to send and recieve the data",
+                "image": "rabbitmq.jpg"
+            },
+            {
+                "title": "Raspberry pi",
+                "description": "Main MicroController",
+                "image": "RP.jpg"
+            },
+            {
+                "title": "l298n motor driver",
+                "description": "Help to access to Wheel of the vehicle",
+                "image": "L2.jpg"
+            },
+            {
+                "title": "Car",
+                "description": "Car get command and start move",
+                "image": "car.png"
+            },
+            {
+                "title": "Power Supply ",
+                "description": "PowerSupply to entire prototype",
+                "image": "current.png"
+            },
+            {
+                "title": "nodered",
+                "description": "Visual the data in Grapph",
+                "image": "nodered.png"
+            }
+        ]
+
+        data.map(a => {
+            document.getElementById("container").innerHTML += `
+            <div class="card">
+                <div class="imgbx">
+                    <img src="${a.image}">
+                </div>
+                <div class="content">
+                    <div class="Details">
+                        <h2>${a.title}</h2>
+                        <span>${a.description}</span>
+                    </div>
+                </div>
+            </div>
+            `
+        })
+    </script>
+    <script>
+        const card = document.getElementsByClassName("card")
+        let axis = []
+        for (let i = 0; i < card.length; i++) {
+            axis.push(card[i].getBoundingClientRect())
+        }
+        console.log(axis)
+        for (let i = 0; i < 4; i++) {
+            document.getElementsByTagName("body")[0].innerHTML += "<div class='line1'></div>";
+            document.getElementsByTagName("body")[0].innerHTML += "<div class='line2'></div>"
+        }
+        const line1 = document.getElementsByClassName("line1")
+        const line2 = document.getElementsByClassName("line2")
+        //this is horizontal
+        for (let i = 0; i < 4; i++) {
+            line1[i].style.top = axis[i * 2].y + (axis[i * 2].height / 2) + "px";
+            if (i % 2 == 0) {
+                line1[i].style.left = axis[i * 2].x + axis[i * 2].width + "px";
+            } else {
+                line1[i].style.right = axis[i * 2].x + axis[i * 2].width + "px";
+
+            }
+            line1[i].style.width = ((axis[i * 2].x + axis[i * 2].width) - axis[i * 2 + 1].x) * -1 + "px";
+        }
+
+        // this is vertical
+        for (let i = 0; i < 4; i++) {
+            line2[i].style.top = axis[i * 2 + 1].y + axis[i * 2 + 1].height + "px";
+            if (i == 0 || i % 2 == 0) {
+
+                line2[i].style.left = axis[i * 2 + 1].x + axis[i * 2 + 1].width / 2 + "px";
+            } else {
+                line2[i].style.left = axis[i * 2].x + axis[i * 2 + 1].width / 2 + "px";
+
+            }
+            if (i == 3) {
+                line2[i].style.height = ((axis[i * 2 + 1].y + axis[i * 2 + 1].height) - axis[i * 2 + 2].y) * -1 + "px"
+
+            } else {
+                line2[i].style.height = ((axis[i * 2 + 1].y + axis[i * 2 + 1].height) - axis[i * 2 + 3].y) * -1 + "px"
+            }
+        }
+
+    </script>
+</body>
+
+</html>
